@@ -9,20 +9,27 @@ import time
 logging.basicConfig(filename='grab.log', level=logging.INFO)
 
 starttime = time.time()
+# w, h = yourImage.size
+# yourImage.crop((0, 30, w, h-30)).save(...)
+
+
+def do_grab_tiny():
+    # ripetere ogni tot secondi
+    logging.info('cattura lo schermo')
+    if __name__ == "__main__":
+        # fullscreen
+        im = ImageGrab.grab(bbox=(10, 10, 500, 500))
+        # salvare l'immagine su un file
+        im.save('im2.png')
 
 
 def do_grab():
     # ripetere ogni tot secondi
     logging.info('cattura lo schermo')
     if __name__ == "__main__":
-        # fullscreen
-        # im = ImageGrab.grab()
-        # salvare l'immagine su un file
-        # im.show()
         logging.info('salve immagine su file png')
         ImageGrab.grab_to_file('im.png')
         # -#
-
     color_thief = ColorThief('im.png')
 
     # get the dominant color
@@ -56,5 +63,5 @@ def do_grab():
 while True:
     print("qui")
     logging.info('cattura')
-    do_grab()
+    do_grab_tiny()
     time.sleep(10.0 - ((time.time() - starttime) % 10.0))
