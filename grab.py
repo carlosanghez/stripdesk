@@ -13,32 +13,21 @@ starttime = time.time()
 # yourImage.crop((0, 30, w, h-30)).save(...)
 
 
-def do_grab_tiny():
-    # ripetere ogni tot secondi
-    logging.info('cattura lo schermo')
-    if __name__ == "__main__":
-        # fullscreen
-        im = ImageGrab.grab(bbox=(10, 10, 500, 500))
-        # salvare l'immagine su un file
-        im.save('im2.png')
-
-
 def do_grab():
     # ripetere ogni tot secondi
     logging.info('cattura lo schermo')
     if __name__ == "__main__":
-        logging.info('salve immagine su file png')
-        ImageGrab.grab_to_file('im.png')
-        # -#
+        logging.info('salva immagine su file png')
+        im = ImageGrab.grab(bbox=(10, 10, 500, 500))
+        im.save('im.png')
     color_thief = ColorThief('im.png')
 
     # get the dominant color
     """Get the dominant color.
 
         :param quality: quality settings, 1 is the highest quality, the bigger
-                        the number, the faster a color will be returned but
-                        the greater the likelihood that it will not be the
-                        visually most dominant color
+            the number, the faster a color will be returned but the greater the
+            likelihood that it will not be the visually most dominant color
         :return tuple: (r, g, b)
         """
 
@@ -63,5 +52,5 @@ def do_grab():
 while True:
     print("qui")
     logging.info('cattura')
-    do_grab_tiny()
+    do_grab()
     time.sleep(10.0 - ((time.time() - starttime) % 10.0))
