@@ -4,6 +4,7 @@ from colorthief import ColorThief
 import logging
 import sched
 import time
+from PIL import Image
 
 
 logging.basicConfig(filename='grab.log', level=logging.INFO)
@@ -18,9 +19,12 @@ def do_grab():
     logging.info('cattura lo schermo')
     if __name__ == "__main__":
         logging.info('salva immagine su file png')
-        im = ImageGrab.grab(bbox=(10, 10, 500, 500))
+        im = ImageGrab.grab()
         im.save('im.png')
-    color_thief = ColorThief('im.png')
+        with Image.open('im.png') as screenshot:
+            width, height = screenshot.size
+            screenshot.crop((0, 1000, width, height-0)).save('imCut.png')
+    color_thief = ColorThief('imCut.png')
 
     # get the dominant color
     """Get the dominant color.
@@ -32,7 +36,7 @@ def do_grab():
         """
 
     logging.info('calcola il colore dominante')
-    dominant_color = color_thief.get_color(quality=1)
+    dominant_color = color_thief.get_color(quality=10)
     print("colore dominante")
     print(dominant_color)
     # build a color palette
@@ -46,7 +50,7 @@ def do_grab():
         :return list: a list of tuple in the form (r, g, b)
         """
     logging.info('calcola la palette dominante')
-    palette = color_thief.get_palette(color_count=6)
+    palette = color_thief.get_palette(color_count=6, quality=10)
     print("palette dominante")
     print(palette)
 while True:
