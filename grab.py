@@ -5,7 +5,7 @@ import sched
 import time
 from PIL import Image
 import serial
-
+import struct
 
 logging.basicConfig(filename='grab.log', level=logging.INFO)
 
@@ -33,7 +33,10 @@ def do_grab():
     logging.info('calcola il colore dominante')
     dominant_color = color_thief.get_color(quality=100)
     print("colore dominante")
-    print(dominant_color)
+    print(dominant_color[0])
+    print(dominant_color[1])
+    print(dominant_color[2])
+    return dominant_color
 
     """Build a color palette.  We are using the median cut algorithm to
         cluster similar colors.
@@ -47,12 +50,20 @@ def do_grab():
     # palette = color_thief.get_palette(color_count=6, quality=100)
     # print("palette dominante")
     # print(palette)
+ser = serial.Serial('/dev/cu.usbmodem14211', 9600)
 while True:
     print("qui")
     logging.info('cattura')
-    do_grab()
-    ser = serial.Serial('/dev/cu.usbmodem14211', 9600)
-    while True:
-        print ser.readline()
-        # ser.write('5')
+    dominant_color = do_grab()
+    # print ser.readline()
+    print('invio colori alla seriale')
+    print(dominant_color[0])
+    print(dominant_color[1])
+    print(dominant_color[2])
+    r = str(dominant_color[0])
+    g = str(dominant_color[1])
+    b = str(dominant_color[2])
+    ser.write(r+'\n')
+    ser.write(g+'\n')
+    ser.write(b+'\n')
     time.sleep(10.0 - ((time.time() - starttime) % 10.0))
