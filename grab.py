@@ -4,6 +4,7 @@ import logging
 import sched
 import time
 from PIL import Image
+import serial
 
 
 logging.basicConfig(filename='grab.log', level=logging.INFO)
@@ -42,12 +43,16 @@ def do_grab():
                         greater the likelihood that colors will be missed.
         :return list: a list of tuple in the form (r, g, b)
         """
-    logging.info('calcola la palette dominante')
-    palette = color_thief.get_palette(color_count=6, quality=100)
-    print("palette dominante")
-    print(palette)
+    # logging.info('calcola la palette dominante')
+    # palette = color_thief.get_palette(color_count=6, quality=100)
+    # print("palette dominante")
+    # print(palette)
 while True:
     print("qui")
     logging.info('cattura')
     do_grab()
+    ser = serial.Serial('/dev/cu.usbmodem14211', 9600)
+    while True:
+        print ser.readline()
+        # ser.write('5')
     time.sleep(10.0 - ((time.time() - starttime) % 10.0))
