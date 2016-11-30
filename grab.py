@@ -4,7 +4,6 @@ import logging
 import time
 from PIL import Image
 import serial
-import struct
 
 logging.basicConfig(filename='grab.log', level=logging.INFO)
 
