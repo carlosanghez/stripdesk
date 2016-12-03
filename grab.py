@@ -50,7 +50,7 @@ def do_grab():
     # palette = color_thief.get_palette(color_count=6, quality=100)
     # print("palette dominante")
     # print(palette)
-ser = serial.Serial('/dev/cu.usbmodem14211', 9600)
+ser = serial.Serial('/dev/cu.usbmodem14241', 9600)
 while True:
     print("qui")
     logging.info('cattura')
